@@ -1,44 +1,47 @@
 package com.springbatch.reader;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.batch.item.ItemReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.springbatch.model.CustomerDTO;
+import com.springbatch.util.RestTemplateHelper;
 
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
-@RequiredArgsConstructor
+
 @Component
+@RequiredArgsConstructor
 @Slf4j
 public class RESTCustomerReader implements ItemReader<CustomerDTO> {
 	
 	@Value("${rest.api}")
     private String apiUrl;
-    @Autowired
-    private final RestTemplate restTemplate;
+    private CustomerDTO t;
 
     private int nextCustomerIndex;
     private List<CustomerDTO> customerData;
 
     @Override
     public CustomerDTO read() throws Exception {
-        log.info("Reading the information of the next student");
-        customerData = fetchCustomerDataFromAPI();
+        log.info("Reading the information of the next customer");
+        customerData = RestTemplateHelper.getForList(CustomerDTO.class, apiUrl);
 
         CustomerDTO nextCustomer = null;
 
         if (nextCustomerIndex < customerData.size()) {
             nextCustomer = customerData.get(nextCustomerIndex);
             nextCustomerIndex++;
-            log.info("Found student: {}", nextCustomer);
+            log.info("Found customer: {}", nextCustomer);
         }else {
         	nextCustomer = null;
         	nextCustomerIndex = 0;
@@ -47,14 +50,6 @@ public class RESTCustomerReader implements ItemReader<CustomerDTO> {
         return nextCustomer;
     }
 
-    private List<CustomerDTO> fetchCustomerDataFromAPI() {
-        log.debug("Fetching student data from an external API by using the url: {}", apiUrl);
 
-        ResponseEntity<CustomerDTO[]> response = restTemplate.getForEntity(apiUrl, CustomerDTO[].class);
-        CustomerDTO[] studentData = response.getBody();
-        log.debug("Found {} students", studentData.length);
-
-        return Arrays.asList(studentData);
-    }
 }
 

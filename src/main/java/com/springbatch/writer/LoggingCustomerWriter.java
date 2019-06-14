@@ -10,11 +10,8 @@ import org.springframework.batch.item.database.JdbcBatchItemWriter;
 import org.springframework.batch.item.database.builder.JdbcBatchItemWriterBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.stereotype.Component;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.springbatch.model.CustomerDTO;
 import com.springbatch.repository.CustomerRepository;
 
@@ -54,7 +51,13 @@ public class LoggingCustomerWriter implements ItemWriter<CustomerDTO>{
 //		Jaxb2Marshaller marshal = new Jaxb2Marshaller();
 //		System.out.println(xmlMapper.writeValueAsString(items.get(0)));
 //		System.out.println(mapper.writeValueAsString(items.get(0)));
-		customerRepository.save(items.get(0));
+		System.out.println("writer: " + items.get(0));
+		try {
+			System.out.println(items.get(0).getClass().toString());
+		//	customerRepository.save(items.get(0));			
+		}catch(Exception e ) {
+			System.out.println(e.getMessage());
+		}
 	}
 
 }

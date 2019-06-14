@@ -41,11 +41,11 @@ public class StepOne {
 	@Autowired
 	RestTemplate restTemplate;
 	@Autowired
-	LoggingCustomerWriter writer;
+	RESTCustomerReader reader;
 	@Autowired
 	LoggingCustomerProcessor processor;
 	@Autowired
-	RESTCustomerReader reader;
+	LoggingCustomerWriter writer;
 
 
 //	
@@ -67,7 +67,7 @@ public class StepOne {
 		return stepFactory.get("restCustomerSep")
 				.<CustomerDTO,CustomerDTO> chunk(1)
 				.reader(reader)
-				.processor(processor)
+				//.processor(processor)
 				.writer(writer)
 				.build();
 	}

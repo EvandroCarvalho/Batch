@@ -7,8 +7,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonRootName;
-import com.fasterxml.jackson.annotation.JsonTypeName;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,6 +26,7 @@ public class CustomerDTO {
 	@Id
 	@NotNull
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@JsonIgnore
 	private Long id;
 	public String name;
 	public String cpf;

@@ -21,10 +21,11 @@ public class WriterGeneratCSVFile {
     HeadersCSV headersCSV;
 
     @Autowired
-    DelimitedLineAggregator delimitedLineAggregator;
+    private DelimitedLineAggregator delimitedLineAggregator;
+    
 
     public FlatFileItemWriter<Customer> writer() {
-        outputResource = new FileSystemResource(resource);
+    	outputResource = new FileSystemResource(resource);
 
         FlatFileItemWriter<Customer> writer = new FlatFileItemWriter<>();
 

@@ -3,6 +3,7 @@ package com.example.createFileBatch.controller;
 
 import com.example.createFileBatch.model.Address;
 import com.example.createFileBatch.model.Customer;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobParameter;
 import org.springframework.batch.core.JobParameters;
@@ -19,6 +20,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+@Slf4j
 @RestController
 @RequestMapping(path = "/v1")
 
@@ -31,7 +33,7 @@ public class CustomerController {
 
     @GetMapping
     public ResponseEntity find() {
-        System.out.println("CALL SERVICE FIND");
+       // log.info("#######SERVICE########");
         Address address = new Address().builder()
                 .street("Stree1")
                 .city("city1")
@@ -52,7 +54,17 @@ public class CustomerController {
                 .age("2")
                 .address(address2)
                 .build();
-        return ResponseEntity.ok(Arrays.asList(customer, customer2));
+        Address address3 = new Address().builder()
+                .street("Stree3")
+                .city("city3")
+                .number("3")
+                .build();
+        Customer customer3 = new Customer().builder()
+                .name("Name3")
+                .age("3")
+                .address(address3)
+                .build();
+        return ResponseEntity.ok(Arrays.asList(customer, customer2, customer3));
     }
 
     @PostMapping

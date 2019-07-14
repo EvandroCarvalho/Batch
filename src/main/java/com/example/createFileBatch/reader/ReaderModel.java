@@ -2,6 +2,7 @@ package com.example.createFileBatch.reader;
 
 import com.example.createFileBatch.feign.CallCustomerService;
 import com.example.createFileBatch.model.Customer;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.NonTransientResourceException;
 import org.springframework.batch.item.ParseException;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Slf4j
 @Component
 public class ReaderModel implements ItemReader<Customer> {
 
@@ -23,6 +25,8 @@ public class ReaderModel implements ItemReader<Customer> {
 
     @Override
     public Customer read() throws Exception, UnexpectedInputException, ParseException, NonTransientResourceException {
+        log.info("#######READER########");
+
         lista = customerService.list();
 
         if(contador < lista.size()) {

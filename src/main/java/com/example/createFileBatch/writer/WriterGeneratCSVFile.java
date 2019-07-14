@@ -33,10 +33,7 @@ public class WriterGeneratCSVFile implements ItemWriter {
     HeadersCSV headersCSV;
 
     @Autowired
-    DelimitedLineAggregator delimitedLineAggregator;
-
-    @Autowired
-    Listener listener;
+    private DelimitedLineAggregator delimitedLineAggregator;
 
     private Long jobId;
 
@@ -82,7 +79,7 @@ public class WriterGeneratCSVFile implements ItemWriter {
 
         writer.setHeaderCallback(headersCSV);
 
-        writer.setAppendAllowed(true);
+        writer.setAppendAllowed(true                );
         writer.setShouldDeleteIfEmpty(true);
         writer.setShouldDeleteIfExists(true);
 

@@ -12,6 +12,7 @@ public class DelimitedConfig {
     @Bean
     DelimitedLineAggregator<Customer> delimitedLineAggregator() {
         DelimitedLineAggregator delimitedLineAggregator = new DelimitedLineAggregator<Customer>();
+        delimitedLineAggregator.setDelimiter(",");
         delimitedLineAggregator.setFieldExtractor(new BeanWrapperFieldExtractor<Customer>() {
             {
                 setNames(new String[]{"name", "age", "address"});
